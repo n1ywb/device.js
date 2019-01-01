@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/n1ywb/device.js/issues"
   },
-  "homepage": "https://github.com/n1ywb/device.js#readme"
+  "homepage": "https://github.com/n1ywb/device.js#readme",
+  "dependencies": {
+    "struct": "git+https://github.com/n1ywb/struct.js.git"
+  }
 }
