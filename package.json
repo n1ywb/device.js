@@ -1,0 +1,19 @@
+{
+  "name": "device",
+  "version": "1.0.0",
+  "description": "async device state and command thing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n1ywb/device.js.git"
+  },
+  "author": "Jeffrey M. Laughlin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/n1ywb/device.js/issues"
+  },
+  "homepage": "https://github.com/n1ywb/device.js#readme"
+}
