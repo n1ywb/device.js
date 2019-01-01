@@ -30,25 +30,46 @@ class Device {
     this.interval = interval;
     this.command = null;
     // TODO on connect, get state, and set command to state
-    this.state = null;
+    // this.state = null;
+    this._waiters = [];
     this._connected = false;
     this._pinger();
+  }
+
+  getState() {
+    return new Promise((resolve, reject)=>
+      this._waiters.push([resolve, reject]));
+  }
+
+  _resolveWaiters(state) {
+    let waiters = this._waiters;
+    this._waiters = [];
+    waiters.forEach(waiter=>waiter[0](state));
+  }
+
+  _rejectWaiters(reason) {
+    let waiters = this._waiters;
+    this._waiters = [];
+    waiters.forEach(waiter=>waiter[1](reason));
   }
 
   async _pinger() {
     try {
       console.debug('ping ' + this.command);
-      this.state = this._refreshState(this.command);
-      let state = await this.state;
+      // this.state = this._refreshState(this.command);
+      // let state = await this.state;
+      let state = await this._refreshState(this.command);
       if (!this._connected) {
         console.log('connected');
         this._connected = true;
         this.command = state;
       }
+      this._resolveWaiters(state);
     }
     catch (err) {
-      console.warn(err);
+      console.warn('disconnected', err);
       this._connected = false;
+      this._rejectWaiters(err);
     }
     finally {
       await new Promise(res=>setTimeout(res, this.interval));
